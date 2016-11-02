@@ -43,7 +43,7 @@ function spawnSync() {
 yarnOrNpm.hasYarn = hasYarn;
 yarnOrNpm.hasNpm = hasNpm;
 yarnOrNpm.spawn = spawn;
-yarnOrNpm.spawn.sync = spawnSync.bind(crossSpawn);
+yarnOrNpm.spawn.sync = spawnSync;
 yarnOrNpm.clearCache = clearCache;
 
 module.exports = yarnOrNpm;

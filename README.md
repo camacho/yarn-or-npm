@@ -31,7 +31,6 @@ import { spawnSync } from 'child_process';
 
 console.log(yarnOrNpm.hasYarn()); // false
 
-
 spawnSync('npm', ['i', '-g', 'yarn'], { stdio: 'inherit' });
 
 console.log(yarnOrNpm.hasYarn()); // false (cached)
