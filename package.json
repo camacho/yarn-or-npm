@@ -1,13 +1,14 @@
 {
   "name": "yarn-or-npm",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Use Yarn or npm to execute a command",
   "files": [
     "index.js",
     "bin/"
   ],
   "bin": {
-    "yarnOrNpm": "bin/index.js"
+    "yarn-or-npm": "bin/index.js",
+    "yon": "bin/index.js"
   },
   "main": "index.js",
   "repository": {

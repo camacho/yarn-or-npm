@@ -1,14 +1,49 @@
-var spawn = require('cross-spawn');
+var crossSpawn = require('cross-spawn');
 
-// Check if Yarn is installed globally
-function checkYarn() {
-  try {
-    var exec = spawn.sync('yarn', ['--version'])
-    var version = exec.stdout && exec.stdout.toString().trim()
-    return !!version;
-  } catch (e) {
-    return false;
-  }
+var cachedHasYarn;
+
+function clearCache() {
+  cachedHasYarn = undefined;
 }
 
-module.exports = checkYarn;
+function hasYarn() {
+  if (cachedHasYarn !== undefined) return cachedHasYarn;
+
+  try {
+    var cmd = crossSpawn.sync('yarn', ['--version'])
+    var version = exec.stdout && exec.stdout.toString().trim()
+    cachedHasYarn = !!version;
+  } catch (e) {
+    cachedHasYarn = false;
+  }
+
+  return cachedHasYarn;
+}
+
+function hasNpm() {
+  return !hasYarn();
+}
+
+function yarnOrNpm() {
+  return hasYarn() ? 'yarn' : 'npm'
+}
+
+function spawn() {
+  var args = args = [].slice.call(arguments);
+  args.unshift(yarnOrNpm());
+  return crossSpawn.apply(undefined, args);
+}
+
+function spawnSync() {
+  var args = args = [].slice.call(arguments);
+  args.unshift(yarnOrNpm());
+  return crossSpawn.sync.apply(crossSpawn, args);
+}
+
+yarnOrNpm.hasYarn = hasYarn;
+yarnOrNpm.hasNpm = hasNpm;
+yarnOrNpm.spawn = spawn;
+yarnOrNpm.spawn.sync = spawnSync.bind(crossSpawn);
+yarnOrNpm.clearCache = clearCache;
+
+module.exports = yarnOrNpm;
