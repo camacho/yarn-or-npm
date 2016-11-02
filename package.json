@@ -1,6 +1,6 @@
 {
   "name": "yarn-or-npm",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Use Yarn or npm to execute a command",
   "files": [
     "index.js",

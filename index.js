@@ -11,7 +11,7 @@ function hasYarn() {
 
   try {
     var cmd = crossSpawn.sync('yarn', ['--version'])
-    var version = exec.stdout && exec.stdout.toString().trim()
+    var version = cmd.stdout && cmd.stdout.toString().trim();
     cachedHasYarn = !!version;
   } catch (e) {
     cachedHasYarn = false;
