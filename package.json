@@ -1,0 +1,22 @@
+{
+  "name": "yarn-or-npm",
+  "version": "1.2.0",
+  "description": "Use Yarn or npm to execute a command",
+  "files": [
+    "index.js",
+    "bin/"
+  ],
+  "bin": {
+    "yarnOrNpm": "bin/index.js"
+  },
+  "main": "index.js",
+  "repository": {
+    "url": "git@github.com:camacho/yarn-or-npm.git",
+    "type": "git"
+  },
+  "author": "Patrick Camacho <patrick@daftdevelopers.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cross-spawn": "^5.0.0"
+  }
+}
