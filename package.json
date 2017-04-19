@@ -1,6 +1,6 @@
 {
   "name": "yarn-or-npm",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Use Yarn or npm to execute a command",
   "files": [
     "index.js",
@@ -11,6 +11,9 @@
     "yon": "bin/index.js"
   },
   "main": "index.js",
+  "engines": {
+    "node": ">=0.12"
+  },
   "repository": {
     "url": "git@github.com:camacho/yarn-or-npm.git",
     "type": "git"
