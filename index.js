@@ -1,17 +1,24 @@
-var crossSpawn = require('cross-spawn');
+const fs = require('fs');
+const path = require('path');
+const crossSpawn = require('cross-spawn');
+const pkgDir = require('pkg-dir');
 
-var cachedHasYarn;
+let cachedHasYarn;
+let cachedHasNPM;
+let cachedClient;
 
 function clearCache() {
   cachedHasYarn = undefined;
+  cachedHasNPM = undefined;
+  cachedClient = undefined;
 }
 
 function hasYarn() {
   if (cachedHasYarn !== undefined) return cachedHasYarn;
 
   try {
-    var cmd = crossSpawn.sync('yarn', ['--version'])
-    var version = cmd.stdout && cmd.stdout.toString().trim();
+    const cmd = crossSpawn.sync('yarn', ['--version']);
+    const version = cmd.stdout && cmd.stdout.toString().trim();
     cachedHasYarn = !!version;
   } catch (e) {
     cachedHasYarn = false;
@@ -21,23 +28,52 @@ function hasYarn() {
 }
 
 function hasNpm() {
-  return !hasYarn();
+  if (cachedHasNPM !== undefined) return cachedHasNPM;
+
+  try {
+    const cmd = crossSpawn.sync('npm', ['--version']);
+    const version = cmd.stdout && cmd.stdout.toString().trim();
+    cachedHasNPM = !!version;
+  } catch (e) {
+    cachedHasNPM = false;
+  }
+
+  return cachedHasNPM;
 }
 
 function yarnOrNpm() {
-  return hasYarn() ? 'yarn' : 'npm'
+  if (cachedClient !== undefined) return cachedClient;
+
+  const pkgRoot = pkgDir.sync();
+
+  if (pkgRoot) {
+    const pkgLockPath = path.join(pkgRoot, 'package-lock.json');
+    const yarnLockPath = path.join(pkgRoot, 'yarn.lock');
+
+    try {
+      fs.statSync(yarnLockPath);
+      cachedClient = 'yarn';
+      return cachedClient;
+    } catch (e) {}
+
+    try {
+      fs.statSync(pkgLockPath);
+      cachedClient = 'npm';
+      return cachedClient;
+    } catch (e) {}
+  }
+
+  return hasYarn ? 'yarn' : 'npm';
 }
 
-function spawn() {
-  var args = args = [].slice.call(arguments);
+function spawn(...args) {
   args.unshift(yarnOrNpm());
-  return crossSpawn.apply(undefined, args);
+  return crossSpawn(...args);
 }
 
-function spawnSync() {
-  var args = args = [].slice.call(arguments);
+function spawnSync(...args) {
   args.unshift(yarnOrNpm());
-  return crossSpawn.sync.apply(crossSpawn, args);
+  return crossSpawn.sync(...args);
 }
 
 yarnOrNpm.hasYarn = hasYarn;
