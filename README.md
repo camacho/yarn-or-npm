@@ -1,9 +1,19 @@
 # yarn-or-npm
-Execute scripts with Yarn or npm
+
+Execute scripts with Yarn or npm.
 
 ```sh
+yarn add -D yarn-or-npm
+# or
 npm i --save-dev yarn-or-npm
 ```
+
+The client is determined by a series of ordered checks:
+
+1. `yarn.lock` file is in the nearest package directory - **yarn**
+1. `package-lock.json` file is in the nearest package directory - **npm**
+1. `yarn` is installed - **yarn**
+1. Fallback - **npm**
 
 ## Module
 
@@ -23,7 +33,7 @@ spawn(['init']);
 spawn.sync(['init'], { stdio: 'inherit' });
 ```
 
-Under the covers, there is a cached value being used for efficiency. This can be manually cleared:
+Under the covers, there are cached lookup values being used for efficiency. These can be manually cleared:
 
 ```js
 import yarnOrNpm from 'yarn-or-npm';
