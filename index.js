@@ -63,7 +63,7 @@ function yarnOrNpm() {
     } catch (e) {}
   }
 
-  return hasYarn ? 'yarn' : 'npm';
+  return hasYarn() ? 'yarn' : 'npm';
 }
 
 function spawn(...args) {
