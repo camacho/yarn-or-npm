@@ -1,13 +1,12 @@
 #! /usr/bin/env node
 'use strict';
 
-const yarnOrNpm = require('../index');
+const yarnOrNpm = require('../lib/index');
 // Execute the command
 try {
-  const status = yarnOrNpm.spawn.sync(
-    process.argv.slice(2),
-    { stdio: 'inherit' }
-  ).status
+  const status = yarnOrNpm.spawn.sync(process.argv.slice(2), {
+    stdio: 'inherit',
+  }).status;
   process.exit(status);
 } catch (err) {
   console.log(err);

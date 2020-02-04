@@ -23,11 +23,22 @@
   },
   "main": "index.js",
   "files": [
-    "index.js",
+    "lib/",
     "bin/"
   ],
+  "scripts": {
+    "format": "npm-run-all format-*",
+    "format-code": "prettier --write ./lib/* ./bin/*",
+    "format-package": "format-package -w",
+    "test": "echo 'no tests'"
+  },
   "dependencies": {
-    "cross-spawn": "^6.0.5",
+    "cross-spawn": "^7.0.1",
     "pkg-dir": "^4.2.0"
+  },
+  "devDependencies": {
+    "format-package": "^5.2.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1"
   }
 }

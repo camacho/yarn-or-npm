@@ -12,6 +12,8 @@ The client is determined by a series of ordered checks:
 
 1. `yarn.lock` file is in the nearest package directory - **yarn**
 1. `package-lock.json` file is in the nearest package directory - **npm**
+   <!-- 1. `yarn.lock` file is in the nearest `.git` repository -->
+   <!-- 1. `package-lock.json` file is in the nearest `.git` repository -->
 1. `yarn` is installed - **yarn**
 1. Fallback - **npm**
 
@@ -65,7 +67,7 @@ Modules with bin files can be called directly in `package.json` scripts:
 {
   "devDependencies": {
     ...
-    "yarn-or-npm": "^1.0.0"
+    "yarn-or-npm": "^3.0.1"
   },
   "scripts": {
     "compile": "babel src --out-dir dist",
