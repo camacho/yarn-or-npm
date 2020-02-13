@@ -30,7 +30,7 @@
     "format": "npm-run-all format-*",
     "format-code": "prettier --write ./lib/* ./bin/*",
     "format-package": "format-package -w",
-    "test": "echo 'no tests'"
+    "test": "jest"
   },
   "dependencies": {
     "cross-spawn": "^7.0.1",
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "format-package": "^5.2.0",
+    "jest": "^25.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1"
   }
